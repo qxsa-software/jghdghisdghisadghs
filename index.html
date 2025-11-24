@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Voucher System</title>
 <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
 body {
   font-family: 'League Spartan', sans-serif;
@@ -63,41 +64,37 @@ body {
 }
 </style>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js"></script>
+<!-- Firebase v8 -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
 <script>
-// === Глобальні змінні ===
-var recaptchaInitialized = false;
-var confirmationResult;
-
-// === Firebase ===
+// Конфіг Firebase
 var firebaseConfig = {
   apiKey: "AIzaSyDVoV3jg4MZXVxY4bemiBrrrFF_xcpHc3M",
   authDomain: "phoneid-6e2af.firebaseapp.com",
   projectId: "phoneid-6e2af",
-  storageBucket: "phoneid-6e2af.firebasestorage.app",
+  storageBucket: "phoneid-6e2af.appspot.com",
   messagingSenderId: "242388555474",
-  appId: "1:242388555474:web:159ac4422d985fd84dff0b",
-  measurementId: "G-D5YL1E4BVL"
+  appId: "1:242388555474:web:159ac4422d985fd84dff0b"
 };
 firebase.initializeApp(firebaseConfig);
 
-// === Відправка SMS ===
+var confirmationResult;
+var recaptchaInitialized = false;
+
+// Відправка коду
 function sendCode() {
   var number = document.getElementById("phone").value.trim();
-  
   if(!/^\d{9}$/.test(number)){
     alert("VveditÍ 9 cyfr pislä kodu +380");
     return;
   }
-
   var phone = "+380" + number;
 
   if(!recaptchaInitialized){
     window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha', { 'size': 'normal' });
-    window.recaptchaVerifier.render();
+    recaptchaVerifier.render();
     recaptchaInitialized = true;
   }
 
@@ -111,7 +108,7 @@ function sendCode() {
     });
 }
 
-// === Підтвердження SMS ===
+// Підтвердження коду
 function verifyCode() {
   var sms = document.getElementById("smsCode").value.trim();
   if(!sms){ alert("VveditÍ kod iz SMS"); return; }
@@ -138,7 +135,7 @@ function verifyCode() {
     });
 }
 
-// === Показ ваучера з таймером ===
+// Показ ваучера з таймером та плавним зникненням
 function showVoucherForFiveMinutes(code){
   var timeLeft = 300;
   var voucherEl = document.getElementById("voucher");
@@ -166,6 +163,7 @@ function showVoucherForFiveMinutes(code){
 }
 </script>
 </head>
+
 <body>
 <div>
   <h2>Otrymaty vaučer</h2>
