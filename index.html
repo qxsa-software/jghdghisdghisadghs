@@ -14,7 +14,6 @@ body {
   padding: 20px;
   position: relative;
 }
-
 .inputBox {
   margin: 12px 0;
   width: 100%;
@@ -26,11 +25,7 @@ body {
   outline: none;
   transition: 0.2s;
 }
-
-.inputBox:focus {
-  border-color: #ff1e1e;
-}
-
+.inputBox:focus { border-color: #ff1e1e; }
 .redBtn {
   background: #ff1e1e;
   color: #ffffff;
@@ -43,17 +38,12 @@ body {
   font-weight: 600;
   transition: 0.2s;
 }
-
-.redBtn:hover {
-  background: #dd0000;
-}
-
+.redBtn:hover { background: #dd0000; }
 #voucher {
   margin-top: 25px;
   font-size: 24px;
   font-weight: 600;
 }
-
 #timer {
   position: fixed;
   left: 10px;
@@ -69,7 +59,7 @@ body {
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
 <script>
-// Конфіг Firebase
+// Firebase config
 var firebaseConfig = {
   apiKey: "AIzaSyDVoV3jg4MZXVxY4bemiBrrrFF_xcpHc3M",
   authDomain: "phoneid-6e2af.firebaseapp.com",
@@ -83,7 +73,6 @@ firebase.initializeApp(firebaseConfig);
 var confirmationResult;
 var recaptchaInitialized = false;
 
-// Відправка коду
 function sendCode() {
   var number = document.getElementById("phone").value.trim();
   if(!/^\d{9}$/.test(number)){
@@ -93,7 +82,7 @@ function sendCode() {
   var phone = "+380" + number;
 
   if(!recaptchaInitialized){
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha', { 'size': 'normal' });
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha', { size: 'normal' });
     recaptchaVerifier.render();
     recaptchaInitialized = true;
   }
@@ -108,7 +97,6 @@ function sendCode() {
     });
 }
 
-// Підтвердження коду
 function verifyCode() {
   var sms = document.getElementById("smsCode").value.trim();
   if(!sms){ alert("VveditÍ kod iz SMS"); return; }
@@ -135,7 +123,6 @@ function verifyCode() {
     });
 }
 
-// Показ ваучера з таймером та плавним зникненням
 function showVoucherForFiveMinutes(code){
   var timeLeft = 300;
   var voucherEl = document.getElementById("voucher");
@@ -180,4 +167,5 @@ function showVoucherForFiveMinutes(code){
 </div>
 </body>
 </html>
+
 
